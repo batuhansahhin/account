@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionDtoConverter {
-    public Transaction convert(Transaction from) {
-        return new Transaction(
-                from.getId(),
-                from.getTransactionDate(),
-                from.getAmount(),
-                from.getTransactionDate()
-        );
+    public TransactionDto convert(Transaction from) {
+        return new TransactionDto(
+                        from.getId(),
+                from.getTransactionType(),
+                        from.getAmount(),
+                from.getTransactionDate() // Assuming you also want to include transaction type in the DTO
+                );
     }
 }

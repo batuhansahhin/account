@@ -10,7 +10,7 @@ data class Account(
         @Id
         @GeneratedValue(generator = "UUID")
         @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-        val id: String?,
+        val id: String? = "",
 
         val balance: BigDecimal? = BigDecimal.ZERO,
 
@@ -22,9 +22,14 @@ data class Account(
         val customer: Customer?,
 
         @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val transactions: Set<Transaction>?
-
-){
+        val transactions: Set<Transaction>? = HashSet()
+) {
+        constructor(customer: Customer, balance: String, creationDate: LocalDateTime) : this(
+                "",
+                customer = customer,
+                balance = balance,
+                creationDate = creationDate
+        )
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (javaClass != other?.javaClass) return false
