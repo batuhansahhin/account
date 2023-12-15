@@ -1,7 +1,11 @@
 package com.springboot.account.model
 
-import jakarta.persistence.*
+import org.hibernate.annotations.Entity
 import org.hibernate.annotations.GenericGenerator
+import javax.persistence.FetchType
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
 data class Customer(

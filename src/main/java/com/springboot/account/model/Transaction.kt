@@ -1,9 +1,9 @@
 package com.springboot.account.model
-
-import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.Id
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import javax.persistence.*
 
 @Entity
 data class Transaction(
@@ -21,7 +21,12 @@ data class Transaction(
     val account: Account?,
 
     @OneToMany(mappedBy = "transaction", fetch = FetchType.LAZY)
-    val relatedTransactions: Set<Transaction>? = emptySet()
+    val relatedTransactions: Set<Transaction>? = emptySet(),
+
+
+
+
+
 ) {
     // Secondary constructor with default parameter values
     constructor(
@@ -30,8 +35,8 @@ data class Transaction(
     ) : this(
         id = null,
         amount = amount,
-        transactionDate = LocalDateTime.now(), // Provide a default value or adjust as needed
-        transactionType = TransactionType.INITIAL, // Provide a default value or adjust as needed
+        transactionDate = LocalDateTime.now(),
+        transactionType = TransactionType.INITIAL,
         account = account
     )
         override fun equals(other: Any?): Boolean {

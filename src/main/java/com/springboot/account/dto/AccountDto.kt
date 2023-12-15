@@ -5,10 +5,9 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class AccountDto(
-
     val id: String?,
     val balance: BigDecimal?,
     val creationDate: LocalDateTime,
     val customer: AccountCustomerDto?,
-    val transaction: MutableSet<Transaction>?
-    )
+    val transactions: MutableSet<TransactionDto>? // Change the property type here
+)

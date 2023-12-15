@@ -5,7 +5,6 @@ import com.springboot.account.model.Transaction;
 import com.springboot.account.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,14 +14,16 @@ public class TransactionService {
 
     private Logger logger = LoggerFactory.getLogger(TransactionService.class);
     private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
 
-    @Autowired
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionService transactionService) {
         this.transactionRepository = transactionRepository;
+        this.transactionService = transactionService;
     }
 
-    protected Transaction initiateMoney(final Account account, BigDecimal amount) {
-        Transaction transaction = new Transaction(amount, account);
-        return transactionRepository.save(transaction);
+    protected Transaction initiateMoney(final Account account, BigDecimal amount){
+
+        return transactionRepository.save(
+                new Transaction(amount, account));
     }
 }

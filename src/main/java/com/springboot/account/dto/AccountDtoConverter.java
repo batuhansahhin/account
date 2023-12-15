@@ -1,9 +1,11 @@
 package com.springboot.account.dto;
 
 import com.springboot.account.model.Account;
+import com.springboot.account.model.Transaction;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,10 +25,13 @@ public class AccountDtoConverter {
                 from.getBalance(),
                 from.getCreationDate(),
                 customerDtoConverter.convertToAccountCustomer(from.getCustomer()),
-                Objects.requireNonNull(from.getTransactions())
-                        .stream()
-                        .map(transactionDtoConverter::convert)
+                Objects.requireNonNullElse(
+                                from.getTransactions(),
+                                Set.of()
+                        ).stream()
+                        .map(transaction -> transactionDtoConverter.convert((Transaction) transaction))
                         .collect(Collectors.toSet())
         );
     }
 }
+

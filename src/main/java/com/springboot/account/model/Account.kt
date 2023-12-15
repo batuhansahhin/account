@@ -1,9 +1,10 @@
 package com.springboot.account.model
 
-import jakarta.persistence.*
+
 import org.hibernate.annotations.GenericGenerator
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import javax.persistence.*
 
 @Entity
 data class Account(
@@ -22,14 +23,15 @@ data class Account(
         val customer: Customer?,
 
         @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val transactions: Set<Transaction>? = HashSet()
+        val transactions: Set<Transaction> = HashSet()
 ) {
         constructor(customer: Customer, balance: String, creationDate: LocalDateTime) : this(
-                "",
+                id = "",
                 customer = customer,
-                balance = balance,
+                balance = BigDecimal(balance),
                 creationDate = creationDate
         )
+
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (javaClass != other?.javaClass) return false
